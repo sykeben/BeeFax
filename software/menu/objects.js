@@ -104,10 +104,14 @@ class ColorBlock {
 class DisplayBlock {
 
 	// Constructor.
-	constructor(textData, row, column, fCol = -1, fBlk = null) {
+	constructor(textData, row, column, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
 		this.textData = textData;
 		this.row = row;
 		this.column = column;
+		this.fCol = fCol;
+		this.bCol = bCol;
+		this.fBlk = fBlk;
+		this.bBlk = bBlk;
 	}
 
 	// Type.
@@ -118,7 +122,7 @@ class DisplayBlock {
 	// Write function.
 	write() {
 		for (let tRow = 0; tRow < this.textData.length; tRow++) {
-			let item = new DisplayItem(this.textData[tRow], this.row+tRow, this.column, -1, -1, this.fCol, -1, this.fBlk, null);
+			let item = new DisplayItem(this.textData[tRow], this.row+tRow, this.column, -1, -1, this.fCol, this.bCol, this.fBlk, this.bBlk);
 			item.write();
 		}
 	}
