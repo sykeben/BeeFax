@@ -10,6 +10,7 @@ let descriptions = new Array();
 descriptions["About"] = "Information about BeeFax.";
 descriptions["Heads Up"] = "Today's dashboard: Weather, time, date, and more.";
 descriptions["News"] = "Top stories from around the world, brought right to your screen.";
+descriptions["Quotes"] = "Inspirational quotes to brighten your day!"
 descriptions["Setup"] = "Want something changed? Perform setting change requests here!";
 descriptions["[none]"] = "[No Description]";
 

@@ -24,6 +24,7 @@ class MenuData {
 				new MenuItem("[ About ]", 4, 2, () => { MenuEngine.goMenu("about", 0); }),
 				new MenuItem("[ Heads Up ]", 6, 2, () => { MenuEngine.goMenu("headsup", 0); }),
 				new MenuItem("[ News ]", 8, 2, () => { MenuEngine.goMenu("news", 0); }),
+				new MenuItem("[ Quotes ]", 10, 2, () => { MenuEngine.goMenu("quotes", 0); }),
 				new MenuItem("[ Setup ]", 22, 2, () => { MenuEngine.goMenu("setup", 1); }),
 				new DisplayItem("Description", 2, 23, 21, 1, 1, 10),
 			]
@@ -107,6 +108,21 @@ class MenuData {
 				new Colortangle(3, 1, consoleSize.columns-2, 18, 25),
 				new MenuItem("<< Back", 22, 1, () => { newsScroll = 0; MenuEngine.goMenu("main", 2); }),
 				new DisplayItem("(Data from wikipedia.org)", consoleSize.rows-2, consoleSize.columns-26, -1, -1, 25)
+			]
+		},
+
+		"quotes": {
+			title: {
+				text: "Quotes",
+				fCol: 12, bCol: 20
+			},
+			periodicUpdate: function() {},
+			periodicInterval: 9999999999,
+			initialWait: 250,
+			updateOnNav: false,
+			data: [
+				new DisplayItem("Coming Soon!", 2, 1),
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 3); })
 			]
 		},
 
