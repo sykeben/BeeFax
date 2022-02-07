@@ -116,13 +116,15 @@ class MenuData {
 				text: "Quotes",
 				fCol: 12, bCol: 20
 			},
-			periodicUpdate: function() {},
-			periodicInterval: 9999999999,
-			initialWait: 250,
+			periodicUpdate: ExternalQuotes.periodicUpdate,
+			periodicInterval: 1000,
+			initialWait: 125,
 			updateOnNav: false,
 			data: [
-				new DisplayItem("Coming Soon!", 2, 1),
-				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 3); })
+				new Colortangle(2, 1, consoleSize.columns-2, 17, 25),
+				new Colortangle(20, 1, consoleSize.columns-2, 1, 25),
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 3); }),
+				new DisplayItem("(Data from api.quotable.io)", consoleSize.rows-2, consoleSize.columns-28, -1, -1, 25)
 			]
 		},
 
