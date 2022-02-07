@@ -15,10 +15,10 @@ class ExternalHeadsUp {
 	// Geolocation performer.
 	static performGeolocation() {
 		
-		//TODO - Uncomment this and fix that damn CORS error.
+		//TODO - Uncomment this and fix that dang CORS error.
 		//getJSON("http://ip-api.com/json/", { fields: "lat,lon" }).then(ipData => {
 
-		//TODO - Remove this hardcoded shit.
+		//TODO - Remove this hardcoded stuff.
 		const ipData = {
 			lat:  40.4444,
 			lon: -86.9256
@@ -52,7 +52,7 @@ class ExternalHeadsUp {
 
 			});
 		
-		//TODO - Uncomment this and fix that damn CORS error.
+		//TODO - Uncomment this and fix that dang CORS error.
 		//});
 	}
 
