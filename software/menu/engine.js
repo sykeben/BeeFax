@@ -145,7 +145,7 @@ class MenuEngine {
 				(e.which >= 48 && e.which <= 90) ||
 				(e.which >= 96 && e.which <= 111) ||
 				(e.which >= 160 && e.which <= 165) ||
-				(e.which == 170 || e.which == 171) ||
+				(e.which == 170 || e.which == 171 || e.which == 173) ||
 				(e.which >= 186 && e.which <= 223)
 			) {
 				let selectedItem = menuItems[currentItem];

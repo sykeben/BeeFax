@@ -110,14 +110,7 @@ class InputItem extends MenuItem {
 			this.value += keyEvent.key;
 		}
 
-		// Update display (includes scrolling).
-		if (this.value.length > this.width) {
-			this.title = "←" + this.value.substring(this.value.length-this.width+1);
-		} else {
-			this.title = this.value;
-		}
-
-		// Update & Perform callback.
+		// Write & Perform callback.
 		this.write();
 		if (this.callback != null) this.callback(this.value);
 
@@ -126,8 +119,18 @@ class InputItem extends MenuItem {
 	// Write function.
 	write() {
 
-		// Clear empty text.
-		BufferInterface.fillText(this.row, this.column+this.value.length, this.width-this.value.length, 1, " ");
+		// Update title.
+		this.title = this.value;
+
+		// Update cursor.
+		this.title += "▒";
+
+		// Update scrolling.
+		if (this.title.length > this.width) {
+			this.title = "⏴" + this.value.substring(this.title.length-this.width+1);
+		} else {
+			BufferInterface.fillText(this.row, this.column+this.title.length, this.width-this.title.length, 1, " ");
+		}
 
 		// Perform rest of write.
 		super.write();

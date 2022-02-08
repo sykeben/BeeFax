@@ -25,7 +25,7 @@ class MenuData {
 				new MenuItem("[ Heads Up ]", 6, 2, () => { MenuEngine.goMenu("headsup", 0); }),
 				new MenuItem("[ News ]", 8, 2, () => { MenuEngine.goMenu("news", 0); }),
 				new MenuItem("[ Quotes ]", 10, 2, () => { MenuEngine.goMenu("quotes", 0); }),
-				new MenuItem("[ Setup ]", 22, 2, () => { MenuEngine.goMenu("setup", 1); }),
+				new MenuItem("[ Setup ]", 22, 2, () => { MenuEngine.goMenu("setup", 2); }),
 				new DisplayItem("Description", 2, 23, 21, 1, 1, 10),
 			]
 		},
