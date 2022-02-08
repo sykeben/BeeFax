@@ -123,7 +123,7 @@ class MenuData {
 			data: [
 				new Colortangle(2, 1, consoleSize.columns-2, 17, 25),
 				new Colortangle(20, 1, consoleSize.columns-2, 1, 25),
-				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 3); }),
+				new MenuItem("<< Back", 22, 1, () => { quotesTimer = 14; MenuEngine.goMenu("main", 3); }),
 				new DisplayItem("(Data from api.quotable.io)", consoleSize.rows-2, consoleSize.columns-28, -1, -1, 25)
 			]
 		},
@@ -140,6 +140,7 @@ class MenuData {
 			data: [
 				new MenuItem("Next Track", 2, 1, () => { ExternalSetup.requestSkip(); }),
 				new DisplayItem("Skip to the next song.", 2, 15, -1, 0, 28),
+				new InputItem(4, 1, null, 10, -1, -1, 23),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
 			]
 		}

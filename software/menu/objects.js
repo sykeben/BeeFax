@@ -23,7 +23,7 @@ class DisplayItem {
 
 	// Type.
 	getType() {
-		return "display";
+		return "item.display";
 	}
 
 	// Write function.
@@ -43,14 +43,14 @@ class DisplayItem {
 class MenuItem extends DisplayItem {
 	
 	// Constructor.
-	constructor(title, row, column, callback, width = -1, offset = -1, fCol = -1, bCol = -1,  fBlk = null, bBlk = null) {
+	constructor(title, row, column, callback = null, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
 		super(title, row, column, width, offset, fCol, bCol, fBlk, bBlk);
 		this.callback = callback;
 	}
 
 	// Type.
 	getType() {
-		return "item";
+		return "item.menu";
 	}
 
 	// Title.
@@ -67,7 +67,74 @@ class MenuItem extends DisplayItem {
 
 	// Callback runner.
 	doCallback() {
-		this.callback();
+		if (this.callback != null) this.callback();
+	}
+
+}
+
+// Input item object.
+class InputItem extends MenuItem {
+
+	// Constructor.
+	constructor(row, column, callback = null, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
+		super("", row, column, callback, width, offset, fCol, bCol, fBlk, bBlk);
+		this.value = "";
+	}
+
+	// Type.
+	getType() {
+		return "item.input";
+	}
+
+	// Value getter.
+	getValue() {
+		return this.value;
+	}
+
+	// Value setter.
+	setValue(newValue) {
+		this.value = newValue;
+		if (this.callback != null) this.callback(this.value);
+	}
+
+	// Update runner.
+	doUpdate(keyEvent) {
+
+		// Backspace key, remove last character.
+		if (keyEvent.key == "Backspace") {
+			if (this.value.length > 0) this.value = this.value.substr(0, this.value.length-1);
+		}
+
+		// Other text key, append new character.
+		else {
+			this.value += keyEvent.key;
+		}
+
+		// Update display (includes scrolling).
+		if (this.value.length > this.width) {
+			this.title = "←" + this.value.substring(this.value.length-this.width+1);
+		} else {
+			this.title = this.value;
+		}
+
+		// Update & Perform callback.
+		this.write();
+		if (this.callback != null) this.callback(this.value);
+
+	}
+
+	// Write function.
+	write() {
+
+		// Clear empty text.
+		BufferInterface.fillText(this.row, this.column+this.value.length, this.width-this.value.length, 1, " ");
+
+		// Perform rest of write.
+		super.write();
+
+		// Force screen update.
+		Display.goDraw();
+
 	}
 
 }
@@ -84,7 +151,7 @@ class ColorBlock {
 
 	// Type.
 	getType() {
-		return "color.block";
+		return "block.color";
 	}
 
 	// Write function.
@@ -116,7 +183,7 @@ class DisplayBlock {
 
 	// Type.
 	getType() {
-		return "display.block";
+		return "block.display";
 	}
 
 	// Write function.
