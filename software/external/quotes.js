@@ -23,7 +23,7 @@ class ExternalQuotes {
             BufferInterface.fillRect(20, 1, consoleSize.columns-2, 1, 25);
 
             // Get & display random quote.
-            getJSON(`http://api.quotable.io/random?maxLength=${(consoleSize.columns-4)*13}`, {}).then(data => {
+            getJSON(`https://api.quotable.io/random?maxLength=${(consoleSize.columns-4)*13}`, {}).then(data => {
 
                 // Quit if incorrect menu.
                 if (menuName != "quotes") return;
