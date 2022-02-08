@@ -140,7 +140,8 @@ class MenuData {
 			data: [
 				new MenuItem("Next Track", 2, 1, () => { ExternalSetup.requestSkip(); }),
 				new DisplayItem("Skip to the next song.", 2, 15, -1, 0, 28),
-				new InputItem(4, 1, null, 10, -1, -1, 23),
+				new DisplayItem("Key Test", 4, 1),
+				new InputItem(4, 15, null, 25, -1, -1, 28),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
 			]
 		}
