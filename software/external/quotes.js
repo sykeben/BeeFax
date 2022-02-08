@@ -20,6 +20,7 @@ class ExternalQuotes {
 
             // Timer done, perform update.
             quotesTimer = 0;
+            ExternalQuotes.timerTextUpdate();
             BufferInterface.fillRect(20, 1, consoleSize.columns-2, 1, 25);
 
             // Get & display random quote.
@@ -46,9 +47,23 @@ class ExternalQuotes {
 
             // Timer continues, move forward.
             quotesTimer++;
+            ExternalQuotes.timerTextUpdate();
             BufferInterface.fillRect(20, 1, Math.round((consoleSize.columns-2)*(quotesTimer/quotesLength)), 1, 12);
 
         }
+
+    }
+
+    // Timer text update function.
+    static timerTextUpdate() {
+        
+        // Create strings.
+        let timerText = (quotesLength-quotesTimer).toString() + "s";
+        const timerEndText = quotesLength.toString() + "s";
+
+        // Display.
+        BufferInterface.fillText(20, consoleSize.columns-timerEndText.length-2, timerEndText.length, 1, " ");
+        BufferInterface.writeString(timerText, 20, consoleSize.columns-timerText.length-2, 12, 25);
 
     }
 
