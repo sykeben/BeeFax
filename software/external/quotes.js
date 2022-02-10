@@ -15,6 +15,9 @@ class ExternalQuotes {
     // Periodic update function.
     static periodicUpdate() {
 
+        // Quit if incorrect menu.
+        if (menuName != "quotes") return;
+
         // Manage Timer.
         if (quotesTimer >= quotesLength) {
 
