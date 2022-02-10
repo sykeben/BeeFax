@@ -21,14 +21,14 @@ class ExternalSetup {
 		if (menuName != "setup") return;
 
 		// Clear previous.
-		BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 25);
+		BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 14);
 
 		// Print new.
-		BufferInterface.writeString(newStatus, 22, consoleSize.columns-newStatus.length-1, 25);
+		BufferInterface.writeString(newStatus, 22, consoleSize.columns-newStatus.length-1, 14);
 
 		// Set clear timeout.
 		lmTimeout = setTimeout(() => {
-			BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 25);
+			BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 14);
 		}, 3000);
 
 	}
@@ -38,6 +38,9 @@ class ExternalSetup {
 
 		// Play next track.
 		Music.nextTrack();
+
+		// Notify user.
+		ExternalSetup.printStatus("Playing next track...");
 
 	}
 
