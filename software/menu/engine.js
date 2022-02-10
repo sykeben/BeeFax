@@ -141,12 +141,16 @@ class MenuEngine {
 
 			// Text Characters, Backspace: Input Item Callback.
 			else if (
-				(e.which == 8 || e.which == 32) ||
-				(e.which >= 48 && e.which <= 90) ||
-				(e.which >= 96 && e.which <= 111) ||
-				(e.which >= 160 && e.which <= 165) ||
-				(e.which == 170 || e.which == 171 || e.which == 173) ||
-				(e.which >= 186 && e.which <= 223)
+				(
+					(e.which == 8 || e.which == 32) ||
+					(e.which >= 48 && e.which <= 90) ||
+					(e.which >= 96 && e.which <= 111) ||
+					(e.which >= 160 && e.which <= 165) ||
+					(e.which == 170 || e.which == 171 || e.which == 173) ||
+					(e.which >= 186 && e.which <= 223)
+				) && (
+					!(e.ctrlKey || e.metaKey)
+				)
 			) {
 				let selectedItem = menuItems[currentItem];
 				if (selectedItem.getType() == "item.input") selectedItem.doUpdate(e);

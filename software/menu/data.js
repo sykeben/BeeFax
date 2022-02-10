@@ -25,7 +25,7 @@ class MenuData {
 				new MenuItem("[ Heads Up ]", 6, 2, () => { MenuEngine.goMenu("headsup", 0); }),
 				new MenuItem("[ News ]", 8, 2, () => { MenuEngine.goMenu("news", 0); }),
 				new MenuItem("[ Quotes ]", 10, 2, () => { MenuEngine.goMenu("quotes", 0); }),
-				new MenuItem("[ Setup ]", 22, 2, () => { MenuEngine.goMenu("setup", 2); }),
+				new MenuItem("[ Setup ]", 22, 2, () => { MenuEngine.goMenu("setup", 3); }),
 				new DisplayItem("Description", 2, 23, 21, 1, 1, 10),
 			]
 		},
@@ -140,8 +140,18 @@ class MenuData {
 			data: [
 				new MenuItem("> Next Track", 2, 1, () => { ExternalSetup.requestSkip(); }),
 				new DisplayItem("Skip to the next song.", 2, 18, -1, 0, 28),
-				new DisplayItem("~ Key Test", 4, 1),
-				new InputItem(4, 18, null, 25, -1, -1, 28),
+				new DisplayItem("~ Latitude", 4, 1),
+				new InputItem(
+					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat),
+					(val) => { localStorage.setItem("location.lat", val.toString()) },
+					4, 18, 25, -1, -1, 26
+				),
+				new DisplayItem("~ Longitude", 6, 1),
+				new InputItem(
+					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon),
+					(val) => { localStorage.setItem("location.lon", val.toString()) },
+					6, 18, 25, -1, -1, 26
+				),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
 			]
 		}

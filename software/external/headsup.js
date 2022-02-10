@@ -5,55 +5,71 @@
 // Please do not copy or rebrand my work.                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
-// External Def: IP Geolocation data.
-var ipLocation = { lat: null, lon: null, rlat: 0, rlon: 0, gridx: 0, gridy: 0 };
-var weatherUrls = { forecast: "", observation: "", observationBackup: "" };
+// External Def: Geolocation data.
+let geoLocation = { successful: true, failReason: "", lat: null, lon: null, rlat: 0, rlon: 0, gridx: 0, gridy: 0 };
+let weatherUrls = { forecast: "", observation: "", observationBackup: "" };
 
 // Class.
 class ExternalHeadsUp {
 
 	// Geolocation performer.
 	static performGeolocation() {
-		
-		//TODO - Uncomment this and fix that dang CORS error.
-		//getJSON("http://ip-api.com/json/", { fields: "lat,lon" }).then(ipData => {
 
-		//TODO - Remove this hardcoded stuff.
-		const ipData = {
-			lat:  40.4444,
-			lon: -86.9256
+		// Load & verify settings.
+		let loadedLat = defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat);
+		let loadedLon = defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon);
+		let loadVerify = /^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/;
+		if (!(loadVerify.test(loadedLat) && loadVerify.test(loadedLon))) {
+			geoLocation.successful = false;
+			geoLocation.failReason = "Invalid location settings.\nPlease check your latitude and longitude in setup.";
+			return;
 		}
 
-			// Store lat & Long.
-			ipLocation.lat = ipData.lat;
-			ipLocation.lon = ipData.lon;
-			ipLocation.rlat = Math.round(ipData.lat*100)/100;
-			ipLocation.rlon = Math.round(ipData.lon*100)/100;
+		// Store lat & Long.
+		geoLocation.lat = loadedLat;
+		geoLocation.lon = loadedLon;
+		geoLocation.rlat = Math.round(geoLocation.lat*100)/100;
+		geoLocation.rlon = Math.round(geoLocation.lon*100)/100;
 
-			// Search for grid position & URLs.
-			getJSON(`https://api.weather.gov/points/${ipData.lat},${ipData.lon}`, {}).then(gridData => {
+		// Search for grid position & URLs.
+		getJSON(`https://api.weather.gov/points/${geoLocation.lat},${geoLocation.lon}`, {}).then((gridData) => {
 
-				// Store grid X & Y position.
-				ipLocation.gridx = gridData.properties.gridX;
-				ipLocation.gridy = gridData.properties.gridY;
+			// Store grid X & Y position.
+			geoLocation.gridx = gridData.properties.gridX;
+			geoLocation.gridy = gridData.properties.gridY;
 
-				// Store forecast URL.
-				weatherUrls.forecast = gridData.properties.forecast;
+			// Store forecast URL.
+			weatherUrls.forecast = gridData.properties.forecast;
 
-				// Get observation URL.
-				getJSON(gridData.properties.observationStations, {}).then(stationData => {
-					weatherUrls.observation = `${stationData.observationStations[0]}/observations/latest`;
-					if (stationData.observationStations.length > 1) {
-						weatherUrls.observationBackup = `${stationData.observationStations[1]}/observations/latest`;
-					} else {
-						weatherUrls.observationBackup = weatherUrls.observation;
-					}
-				});
+			// Get observation URL.
+			getJSON(gridData.properties.observationStations, {}).then((stationData) => {
 
+				// Generate URLs.
+				weatherUrls.observation = `${stationData.observationStations[0]}/observations/latest`;
+				if (stationData.observationStations.length > 1) {
+					weatherUrls.observationBackup = `${stationData.observationStations[1]}/observations/latest`;
+				} else {
+					weatherUrls.observationBackup = weatherUrls.observation;
+				}
+
+				// Report success.
+				geoLocation.successful = true;
+				geoLocation.failReason = "";
+
+			// Report observation URL failure.
+			}, () => {
+				geoLocation.successful = false;
+				geoLocation.failReason = "Cannot get observation URL.\nPlease check for connection errors to api.weather.gov.";
+				return;
 			});
+
+		// Report grid positioning failure.
+		}, () => {
+			geoLocation.successful = false;
+			geoLocation.failReason = "Cannot get grid position.\nPlease check for connection errors to api.weather.gov.";
+			return;
+		});
 		
-		//TODO - Uncomment this and fix that dang CORS error.
-		//});
 	}
 
 	// Moon phase.
@@ -133,12 +149,37 @@ class ExternalHeadsUp {
 		// Quit if incorrect menu.
 		if (menuName != "headsup") return;
 
-		// Retry geolocation if none found.
-		if (location.lat == null && location.lon == null) ExternalHeadsUp.performGeolocation();
+		// Retry geolocation if none loaded or failed.
+		if (
+			(location.lat == null && location.lon == null) ||
+			(!geoLocation.successful)
+		) {
+			ExternalHeadsUp.performGeolocation();
+		}
+
+		// Display error if geolocation fails.
+		if (!geoLocation.successful) {
+
+			// Clear everything.
+			BufferInterface.fillText(3, 1, consoleSize.columns-2, 10, " ", 15);
+			BufferInterface.fillText(15, 1, 20, 6, " ", 21);
+			BufferInterface.fillText(15, (consoleSize.columns-21), 20, 6, " ", 15);
+
+			// Write error message.
+			BufferInterface.writeString("An error occurred.", 4, 3);
+			let errorReason = formatTextWrap(`Reason: ${geoLocation.failReason}`, consoleSize.columns-6);
+			for (let index = 0; index < errorReason.length; index++) {
+				BufferInterface.writeString(errorReason[index], 6+index, 3);
+			}
+
+			// Quit.
+			return;
+
+		}
 
 		// Display footer.
 		BufferInterface.fillText(consoleSize.rows-2, 10, consoleSize.columns, 1, " ", 25);
-		let footer = (!updateToggle ? `Location: ${ipLocation.rlat} ${ipLocation.rlon}` : "(Data from api.weather.gov)");
+		let footer = (!updateToggle ? `Location: ${geoLocation.rlat} ${geoLocation.rlon}` : "(Data from api.weather.gov)");
 		BufferInterface.writeString(footer, consoleSize.rows-2, consoleSize.columns-1-footer.length);
 
 		// Get forecast.

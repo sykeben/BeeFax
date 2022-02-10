@@ -76,9 +76,10 @@ class MenuItem extends DisplayItem {
 class InputItem extends MenuItem {
 
 	// Constructor.
-	constructor(row, column, callback = null, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
+	constructor(initialValue = null, callback = null, row, column, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
+		if (initialValue == null) initialValue = "";
 		super("", row, column, callback, width, offset, fCol, bCol, fBlk, bBlk);
-		this.value = "";
+		this.value = initialValue;
 	}
 
 	// Type.
