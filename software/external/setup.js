@@ -14,11 +14,11 @@ class ExternalSetup {
 	// Status printer.
 	static printStatus(newStatus) {
 
-		// Quit if incorrect menu.
-		if (menuName != "setup") return;
-
 		// Clear last timeout.
 		if (lmTimeout) clearTimeout(lmTimeout);
+
+		// Quit if incorrect menu.
+		if (menuName != "setup") return;
 
 		// Clear previous.
 		BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 25);
