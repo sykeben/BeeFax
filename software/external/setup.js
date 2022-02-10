@@ -33,15 +33,11 @@ class ExternalSetup {
 
 	}
 
-	// Track skip request.
-	static requestSkip() {
+	// Track skip.
+	static nextTrack() {
 
-		// Submit request.
-		ExternalSetup.printStatus("Request submitted.");
-		setTimeout(() => {
-			ExternalSetup.printStatus("Request approved.");
-			Music.nextTrack();
-		}, Math.round(5000 + (Math.random() * 5000)));
+		// Play next track.
+		Music.nextTrack();
 
 	}
 

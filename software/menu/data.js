@@ -138,7 +138,7 @@ class MenuData {
 			initialWait: 125,
 			updateOnNav: false,
 			data: [
-				new MenuItem("> Next Track", 2, 1, () => { ExternalSetup.requestSkip(); }),
+				new MenuItem("> Next Track", 2, 1, () => { ExternalSetup.nextTrack(); }),
 				new DisplayItem("Skip to the next song.", 2, 18, -1, 0, 28),
 				new DisplayItem("~ Latitude", 4, 1),
 				new InputItem(
