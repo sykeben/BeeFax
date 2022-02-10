@@ -28,6 +28,7 @@ class ExternalSetup {
 
 		// Set clear timeout.
 		lmTimeout = setTimeout(() => {
+			if (menuName != "setup") return;
 			BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 14);
 		}, 3000);
 
