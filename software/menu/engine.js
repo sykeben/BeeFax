@@ -126,11 +126,15 @@ class MenuEngine {
 
 			// Up, Down: Move.
 			if (e.code == "ArrowUp" || e.code == "ArrowDown") {
+				let lastItem = currentItem;
 				if (e.code == "ArrowUp") currentItem--;
 				if (e.code == "ArrowDown") currentItem++;
 				if (currentItem < 0) currentItem = menuItems.length - 1;
 				if (currentItem >= menuItems.length) currentItem = 0;
-				menuItems[currentItem].select();
+				if (lastItem != currentItem) {
+					menuItems[lastItem].deselect();
+					menuItems[currentItem].select();
+				}
 			}
 
 			// Enter: Menu Item Callback.

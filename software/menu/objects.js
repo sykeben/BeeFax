@@ -65,6 +65,11 @@ class MenuItem extends DisplayItem {
 		if (currentUpdateOnNav) currentUpdate();
 	}
 
+	// Deselect function.
+	deselect() {
+		return;
+	}
+
 	// Callback runner.
 	doCallback() {
 		if (this.callback != null) this.callback();
@@ -98,6 +103,17 @@ class InputItem extends MenuItem {
 		if (this.callback != null) this.callback(this.value);
 	}
 
+	// Select function.
+	select() {
+		this.write(true);
+		super.select();
+	}
+
+	// Deselect function.
+	deselect() {
+		this.write(false);
+	}
+
 	// Update runner.
 	doUpdate(keyEvent) {
 
@@ -112,19 +128,19 @@ class InputItem extends MenuItem {
 		}
 
 		// Write & Perform callback.
-		this.write();
+		this.write(true);
 		if (this.callback != null) this.callback(this.value);
 
 	}
 
 	// Write function.
-	write() {
+	write(selected = false) {
 
 		// Update title.
 		this.title = this.value;
 
 		// Update cursor.
-		this.title += "▒";
+		if (selected) this.title += "▒";
 
 		// Update scrolling.
 		if (this.title.length > this.width) {
