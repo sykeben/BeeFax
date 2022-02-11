@@ -45,4 +45,4 @@ Note: Due to their development-only usage, individual revisions are not included
     - 1.2 - Added quotes page and temporarily removed geolocation feature due to API issue.
     - 1.3 - Reformatted setup page and reinstated geolocation feature via manual latitude/longitude input.
     - 1.4 - Split code into two branches (one for development, one for production) and started the use of regular version numbering.
-    - 1.5 - Implemented autofocus, standardized file headers, added project link to about section.
+    - 1.5 - Implemented autofocus, standardized file headers, added project link to about section, improved handling of network issues.

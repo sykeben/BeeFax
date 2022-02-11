@@ -12,7 +12,7 @@ class MenuData {
 	static version = {
 		major: 1,
 		minor: 5,
-		revision: 2
+		revision: 3
 	};
 
 	// Menu elements.

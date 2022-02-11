@@ -29,7 +29,11 @@ class MenuEngine {
 			let start = window.location.hash.substr(1);
 			this.goMenu(start);
 		} else {
-			this.goMenu("main");
+			if (navigator.onLine == false) {
+				networkErrorTriggered();
+			} else {
+				this.goMenu("main");
+			}
 		}
 	}
 
@@ -171,6 +175,7 @@ class MenuEngine {
 				ExternalHeadsUp.performGeolocation();
 				Music.nextTrack();
 				this.goMenu("main");
+				if (navigator.onLine == false) networkErrorTriggered();
 			}
 
 		}

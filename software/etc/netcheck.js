@@ -22,5 +22,6 @@ function networkErrorTriggered() {
 	errorMessage = "Network connection lost.";
 	MenuEngine.goMenu("error");
 	displayMode = "error";
+	bgmPlayer.pause();
 
 }
