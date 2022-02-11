@@ -124,7 +124,16 @@ class ExternalHeadsUp {
 	static writeNow(title, temp, tempCode, wind, windCode, windDir, humid) {
 
 		// Format data.
-		title = "- " + (title==null ? "Unknown" : title) + " -";
+		if (title.includes(" and ")) {
+			let titles = title.split(" and ");
+			if (updateToggle) {
+				title = `...${titles[1]==null ? "Unknown" : titles[1]} -`;
+			} else {
+				title = `- ${titles[0]==null ? "Unknown" : titles[0]}...`;
+			}
+		} else {
+			title = `- ${title==null ? "Unknown" : title} -`;
+		}
 		temp = (temp==null ? "..." : (tempCode=="wmoUnit:degC" ? ExternalHeadsUp.degCtoF(temp) : Math.round(temp))) + "degF";
 		wind = (wind===null ? "..." : (windCode=="wmoUnit:km_h-1" ? ExternalHeadsUp.KPHtoMPH(wind) : Math.round(wind))) + "mph " + ExternalHeadsUp.DEGtoCARD(windDir);
 		humid = (humid==null ? "..." : Math.round(humid)) + "% Humid";
