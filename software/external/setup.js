@@ -45,4 +45,12 @@ class ExternalSetup {
 
 	}
 
+	// Update notifier.
+	static notifyUpdate() {
+
+		// Notify user.
+		ExternalSetup.printStatus("Setting updated.");
+
+	}
+
 }

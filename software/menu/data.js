@@ -143,13 +143,13 @@ class MenuData {
 				new DisplayItem("~ Latitude", 4, 1),
 				new InputItem(
 					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat),
-					(val) => { localStorage.setItem("location.lat", val.toString()) },
+					(val) => { localStorage.setItem("location.lat", val.toString()); ExternalSetup.notifyUpdate(); },
 					4, 18, 25, -1, -1, 26
 				),
 				new DisplayItem("~ Longitude", 6, 1),
 				new InputItem(
 					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon),
-					(val) => { localStorage.setItem("location.lon", val.toString()) },
+					(val) => { localStorage.setItem("location.lon", val.toString()); ExternalSetup.notifyUpdate(); },
 					6, 18, 25, -1, -1, 26
 				),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
