@@ -227,7 +227,7 @@ class ExternalHeadsUp {
 		} else {
 			title = `- ${title==null ? "Unknown" : title} -`;
 		}
-		temp = (temp==null ? "..." : (tempCode=="wmoUnit:degC" ? ExternalHeadsUp.degCtoF(temp) : Math.round(temp))) + "degF";
+		temp = (temp==null ? "..." : (tempCode=="wmoUnit:degC" ? ExternalHeadsUp.degCtoF(temp) : Math.round(temp))) + " F";
 		wind = (wind===null ? "..." : (windCode=="wmoUnit:km_h-1" ? ExternalHeadsUp.KPHtoMPH(wind) : Math.round(wind))) + "mph " + ExternalHeadsUp.DEGtoCARD(windDir);
 		humid = (humid==null ? "..." : Math.round(humid)) + "% Humid";
 
@@ -236,6 +236,7 @@ class ExternalHeadsUp {
 
 		// Temperature.
 		BufferInterface.writeString(temp, 17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2)));
+		BufferInterface.placeIcon(17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2))+temp.length-2, "Weather:\uf042")
 
 		// Wind.
 		BufferInterface.writeString(wind, 18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2)));
