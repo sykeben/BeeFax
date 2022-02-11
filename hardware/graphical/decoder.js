@@ -97,15 +97,20 @@ class Decoder {
 					if ((bufData.length >= 3) && (bufData.substring(0, 3) == ".i:")) {
 
 						// Split package.
-						// Format: .i:[IconSet]:[IconCharacter]
+						// Format: .i:[IconSet]:[IconCharacter]:[Opt,Size]:[Opt,vOffset]:[Opt,hOffset]
 						let pack = bufData.split(":");
+						let set = (pack[1] == null ? "" : pack[1]);
+						let icon = (pack[2] == null ? "\u0000" : pack[2]);
+						let xSize = (pack[3] == null ? "R" : pack[3]);
+						let xVOff = (pack[4] == null ? 0 : Number(pack[4]));
+						let xHOff = (pack[5] == null ? 0 : Number(pack[5]));
 
 						// Switch to Icon.
 						let oldFont = context.font;
-						context.font = `12px customIcon${pack[1]}`;
+						context.font = `${xSize == "XL" ? 24 : xSize == "L" ? 18 : xSize == "R" ? 14 : xSize == "S" ? 10 : xSize == "XS" ? 6 : 14}px customIcon${set}`;
 
 						// Icon & FCol.
-						context.fillText(pack[2], (column * cellSize.width) + (cellSize.width / 2), (row * cellSize.height) + (cellSize.height / 2));
+						context.fillText(icon, (column * cellSize.width) + (cellSize.width / 2) + xHOff, (row * cellSize.height) + (cellSize.height / 2) + xVOff);
 
 						// Switch back.
 						context.font = oldFont;

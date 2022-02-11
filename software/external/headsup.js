@@ -110,7 +110,7 @@ class ExternalHeadsUp {
 	static DEGtoCARD(DEG) {
 		if (typeof DEG === 'string') DEG = parseInt(DEG);
 		if (DEG <= 0 || DEG > 360 || typeof DEG === 'undefined') return '☈';
-		const arrows = { north: '↑ N', north_east: '↗ NE', east: '→ E', south_east: '↘ SE', south: '↓ S', south_west: '↙ SW', west: '← W', north_west: '↖ NW' };
+		const arrows = { north: '\uf058 N', north_east: '\uf057 NE', east: '\uf04d E', south_east: '\uf088 SE', south: '\uf044 S', south_west: '\uf043 SW', west: '\uf048 W', north_west: '\uf087 NW' };
 		const directions = Object.keys(arrows);
 		const degree = 360 / directions.length;
 		DEG = DEG + degree / 2;
@@ -177,7 +177,6 @@ class ExternalHeadsUp {
 
 			// Translate.
 			// Icon values: https://erikflowers.github.io/weather-icons/
-			let icon = "Weather:";
 			const translations = {
 				"?": {
 					"Sun": "\uf00d",
@@ -201,7 +200,7 @@ class ExternalHeadsUp {
 					"Snow": "\uf01b"
 				}
 			}
-			icon += (translations[part][cond] == null ? "\uf07b" : translations[part][cond]);
+			let icon = `Weather:${translations[part][cond] == null ? "\uf07b" : translations[part][cond]}:S:-5:2`;
 
 			// Update result.
 			result.push(icon);
@@ -228,7 +227,8 @@ class ExternalHeadsUp {
 			title = `- ${title==null ? "Unknown" : title} -`;
 		}
 		temp = (temp==null ? "..." : (tempCode=="wmoUnit:degC" ? ExternalHeadsUp.degCtoF(temp) : Math.round(temp))) + " F";
-		wind = (wind===null ? "..." : (windCode=="wmoUnit:km_h-1" ? ExternalHeadsUp.KPHtoMPH(wind) : Math.round(wind))) + "mph " + ExternalHeadsUp.DEGtoCARD(windDir);
+		let windCard = ExternalHeadsUp.DEGtoCARD(windDir);
+		wind = (wind===null ? "..." : (windCode=="wmoUnit:km_h-1" ? ExternalHeadsUp.KPHtoMPH(wind) : Math.round(wind))) + "mph " + windCard;
 		humid = (humid==null ? "..." : Math.round(humid)) + "% Humid";
 
 		// Title.
@@ -236,10 +236,11 @@ class ExternalHeadsUp {
 
 		// Temperature.
 		BufferInterface.writeString(temp, 17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2)));
-		BufferInterface.placeIcon(17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2))+temp.length-2, "Weather:\uf042")
+		BufferInterface.placeIcon(17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2))+temp.length-2, "Weather:\uf042:XL:5")
 
 		// Wind.
 		BufferInterface.writeString(wind, 18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2)));
+		BufferInterface.placeIcon(18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2))+wind.length-windCard.length, `Weather:${windCard[0]}:XL:2`);
 
 		// Humidity.
 		BufferInterface.writeString(humid, 19, (consoleSize.columns-28)+Math.floor(((27-humid.length)/2)));
