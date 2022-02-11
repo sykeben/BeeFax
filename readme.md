@@ -30,3 +30,18 @@ A Ceefax/Weatherscan-Esque Clone
 5. **Done!**
 
 ---
+
+## Changelog
+
+Note: Due to their development-only usage, individual revisions are not included in this changelog.
+
+- **Version 0**
+    - 0.0 - Created display engine and test scripts.
+    - 0.1 - Created basic menu engine and about and heads-up sections.
+    - 0.2 - Added setup page with music request system.
+- **Version 1**
+    - 1.0 - Reformatted menu engine and restructured code.
+    - 1.1 - Added news page.
+    - 1.2 - Added quotes page and temporarily removed geolocation feature due to API issue.
+    - 1.3 - Reformatted setup page and reinstated geolocation feature via manual latitude/longitude input.
+    - 1.4 - Split code into two branches (one for development, one for production) and started the use of regular version numbering.

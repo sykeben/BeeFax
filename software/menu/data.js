@@ -8,6 +8,14 @@
 // Class.
 class MenuData {
 
+	// Product version.
+	static version = {
+		major: 1,
+		minor: 4,
+		revision: 0
+	};
+
+	// Menu elements.
 	static menus = {
 
 		"main": {
@@ -130,7 +138,7 @@ class MenuData {
 
 		"setup": {
 			title: {
-				text: "Setup",
+				text: `Setup (v${MenuData.version.major}.${MenuData.version.minor} r${MenuData.version.revision})`,
 				fCol: 22, bCol: 14
 			},
 			periodicUpdate: function() {},
