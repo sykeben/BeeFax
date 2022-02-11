@@ -12,7 +12,7 @@ class MenuData {
 	static version = {
 		major: 1,
 		minor: 5,
-		revision: 3
+		revision: 4
 	};
 
 	// Menu elements.
@@ -97,8 +97,8 @@ class MenuData {
 			data: [
 				new DisplayItem("Forecast", 2, 1),
 				new Colortangle(3, 1, consoleSize.columns-2, 10, 21),
-				new DisplayItem("Right Now", 14, consoleSize.columns-21),
-				new Colortangle(15, consoleSize.columns-21, 20, 6, 21),
+				new DisplayItem("Right Now", 14, consoleSize.columns-28),
+				new Colortangle(15, consoleSize.columns-28, 27, 6, 21),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 1); })
 			]
 		},

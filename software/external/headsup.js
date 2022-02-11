@@ -120,6 +120,99 @@ class ExternalHeadsUp {
 		return arrows['north'];
 	}
 
+	// Weather icon translator.
+	static getIcon(condition) {
+
+		// Initialize variables.
+		condition = condition.toLowerCase();
+		let conditions = [condition];
+
+		// Split up condition by "then" statements.
+		if (condition.includes(" then ")) {
+			let newConditions = [];
+			conditions.forEach((cCondition) => {
+				cCondition.split(" then ").forEach((dCondition) => {
+					newConditions.push(dCondition);
+				});
+			});
+			conditions = newConditions;
+		}
+
+		// Split up condition by "and" statements.
+		if (condition.includes(" and ")) {
+			let newConditions = [];
+			conditions.forEach((cCondition) => {
+				cCondition.split(" and ").forEach((dCondition) => {
+					newConditions.push(dCondition);
+				});
+			});
+			conditions = newConditions;
+		}
+
+		// Perform translation.
+		let result = [];
+		conditions.forEach((cCondition) => {
+
+			// Partials.
+			let part = "?";
+			if (cCondition.includes("part")) {
+				part = "P";
+			} else if (cCondition.includes("most")) {
+				part = "M"
+			}
+
+			// Conditions.
+			let cond = "?"
+			if (cCondition.includes("sun")) {
+				cond = "Sun";
+			} else if (cCondition.includes("clear")) {
+				cond = "Clear";
+			} else if (cCondition.includes("cloud")) {
+				cond = "Cloud";
+			} else if (cCondition.includes("rain")) {
+				cond = "Rain";
+			} else if (cCondition.includes("snow")) {
+				cond = "Snow";
+			}
+
+			// Translate.
+			// Icon values: https://erikflowers.github.io/weather-icons/
+			let icon = "Weather:";
+			const translations = {
+				"?": {
+					"Sun": "\uf00d",
+					"Clear": "\uf02e",
+					"Cloud": "\uf013",
+					"Rain": "\uf018",
+					"Snow": "\uf064"
+				},
+				"P": {
+					"Sun": "\uf002",
+					"Clear": "\uf023",
+					"Cloud": "\uf041",
+					"Rain": "\uf019",
+					"Snow": "\uf01b"
+				},
+				"M": {
+					"Sun": "\uf0b6",
+					"Clear": "\uf086",
+					"Cloud": "\uf014",
+					"Rain": "\uf019",
+					"Snow": "\uf01b"
+				}
+			}
+			icon += (translations[part][cond] == null ? "\uf07b" : translations[part][cond]);
+
+			// Update result.
+			result.push(icon);
+
+		});
+
+		// Return.
+		return result;
+
+	}
+
 	// "Right now" write.
 	static writeNow(title, temp, tempCode, wind, windCode, windDir, humid) {
 
@@ -139,16 +232,16 @@ class ExternalHeadsUp {
 		humid = (humid==null ? "..." : Math.round(humid)) + "% Humid";
 
 		// Title.
-		BufferInterface.writeString(title, 16, (consoleSize.columns-21)+Math.floor(((20-title.length)/2)));
+		BufferInterface.writeString(title, 16, (consoleSize.columns-28)+Math.floor(((27-title.length)/2)));
 
 		// Temperature.
-		BufferInterface.writeString(temp, 17, (consoleSize.columns-21)+Math.floor(((20-temp.length)/2)));
+		BufferInterface.writeString(temp, 17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2)));
 
 		// Wind.
-		BufferInterface.writeString(wind, 18, (consoleSize.columns-21)+Math.floor(((20-wind.length)/2)));
+		BufferInterface.writeString(wind, 18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2)));
 
 		// Humidity.
-		BufferInterface.writeString(humid, 19, (consoleSize.columns-21)+Math.floor(((20-humid.length)/2)));
+		BufferInterface.writeString(humid, 19, (consoleSize.columns-28)+Math.floor(((27-humid.length)/2)));
 
 	}
 
@@ -171,8 +264,8 @@ class ExternalHeadsUp {
 
 			// Clear everything.
 			BufferInterface.fillText(3, 1, consoleSize.columns-2, 10, " ", 15);
-			BufferInterface.fillText(15, 1, 20, 6, " ", 21);
-			BufferInterface.fillText(15, (consoleSize.columns-21), 20, 6, " ", 15);
+			BufferInterface.fillText(15, 1, 15, 6, " ", 21);
+			BufferInterface.fillText(15, (consoleSize.columns-28), 27, 6, " ", 15);
 
 			// Write error message.
 			BufferInterface.writeString("An error occurred.", 4, 3);
@@ -213,6 +306,7 @@ class ExternalHeadsUp {
 				let titles = data.shortForecast.split(" then ");
 				let ticker = (titles.length>1 ? `(${updateToggle ? "2" : "1"}/2)`: "");
 				let title = (titles.length>1&&updateToggle ? titles[1] : titles[0]).substr(0, consoleSize.columns-2);
+				let icons = ExternalHeadsUp.getIcon(title);
 
 				// Dots.
 				for (let column=1; column<consoleSize.columns-2; column++) {
@@ -227,6 +321,11 @@ class ExternalHeadsUp {
 
 				// Temperature.
 				BufferInterface.writeString(temp, row, consoleSize.columns-1-temp.length);
+
+				// Weather icons.
+				icons.forEach((icon, offset) => {
+					BufferInterface.placeIcon(row+1, 1+offset, icon);
+				})
 
 				// Weather title.
 				BufferInterface.writeString(`${title}`, row+1, consoleSize.columns-1-title.length);
@@ -243,11 +342,11 @@ class ExternalHeadsUp {
 		let moon = ExternalHeadsUp.getMoonPhase(now.getFullYear(), now.getMonth(), now.getDate());
 
 		// Write date & time.
-		BufferInterface.fillText(15, 1, 20, 6, " ", 21);
-		BufferInterface.writeString(dotw, 15, Math.floor(((23-dotw.length)/2)));
-		BufferInterface.writeString(date, 17, Math.floor(((23-date.length)/2)));
-		BufferInterface.writeString(time, 18, Math.floor(((23-time.length)/2)));
-		BufferInterface.writeString(moon, 19, Math.floor(((23-moon.length)/2)));
+		BufferInterface.fillText(15, 1, 15, 6, " ", 21);
+		BufferInterface.writeString(dotw, 15, Math.floor(((17-dotw.length)/2)));
+		BufferInterface.writeString(date, 17, Math.floor(((17-date.length)/2)));
+		BufferInterface.writeString(time, 18, Math.floor(((17-time.length)/2)));
+		BufferInterface.writeString(moon, 19, Math.floor(((17-moon.length)/2)));
 
 		// Get current conditions.
 		getJSON(weatherUrls.observation, {}).then(data => {
@@ -256,7 +355,7 @@ class ExternalHeadsUp {
 			if (menuName != "headsup") return;
 
 			// Clear previous data.
-			BufferInterface.fillText(15, (consoleSize.columns-21), 20, 6, " ", 15);
+			BufferInterface.fillText(15, (consoleSize.columns-28), 27, 6, " ", 15);
 
 			// Load data.
 			data = data.properties;

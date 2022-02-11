@@ -55,11 +55,12 @@ class BufferInterface {
 			buffer[row][column] = newValue;
 		}
 	}
-	static placeText(row, column, newText) { this.place(textBuffer, row, column, newText[0]); }   // Text.
-	static placeFCol(row, column, newColor) { this.place(fColBuffer, row, column, newColor); } // FCol.
-	static placeBCol(row, column, newColor) { this.place(bColBuffer, row, column, newColor); } // BCol.
-	static placeFBlk(row, column, newState) { this.place(fBlkBuffer, row, column, newState); } // FBlk.
-	static placeBBlk(row, column, newState) { this.place(bBlkBuffer, row, column, newState); } // BBlk.
+	static placeText(row, column, newText) { this.place(textBuffer, row, column, newText[0]); }    // Text.
+	static placeIcon(row, column, newIcon) { this.place(textBuffer, row, column, ".i:"+newIcon); } // Icon (Text Extension).
+	static placeFCol(row, column, newColor) { this.place(fColBuffer, row, column, newColor); }     // FCol.
+	static placeBCol(row, column, newColor) { this.place(bColBuffer, row, column, newColor); }     // BCol.
+	static placeFBlk(row, column, newState) { this.place(fBlkBuffer, row, column, newState); }     // FBlk.
+	static placeBBlk(row, column, newState) { this.place(bBlkBuffer, row, column, newState); }     // BBlk.
 
 	// String writer.
 	static writeString(string, row, column, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {

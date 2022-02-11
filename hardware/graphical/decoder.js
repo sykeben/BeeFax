@@ -77,14 +77,46 @@ class Decoder {
 
 				// Draw: BCol.
 				if (!(bBlkBuffer[row][column] && bufferNumber==0)) {
+
+					// Set BCol.
 					context.fillStyle = colors[bColBuffer[row][column]];
+
+					// Write BCol.
 					context.fillRect((column * cellSize.width)-0.5, (row * cellSize.height), cellSize.width+1, cellSize.height);
+
 				}
 
-				// Draw: Text & FCol.
+				// Draw: Text/Icon & FCol.
 				if (!(fBlkBuffer[row][column] && bufferNumber==0)) {
+
+					// Set FCol.
 					context.fillStyle = colors[fColBuffer[row][column]];
-					context.fillText(textBuffer[row][column], (column * cellSize.width) + (cellSize.width / 2), (row * cellSize.height) + (cellSize.height / 2));
+
+					// Write Text/Icon & FCol.
+					let bufData = textBuffer[row][column];
+					if ((bufData.length >= 3) && (bufData.substring(0, 3) == ".i:")) {
+
+						// Split package.
+						// Format: .i:[IconSet]:[IconCharacter]
+						let pack = bufData.split(":");
+
+						// Switch to Icon.
+						let oldFont = context.font;
+						context.font = `12px customIcon${pack[1]}`;
+
+						// Icon & FCol.
+						context.fillText(pack[2], (column * cellSize.width) + (cellSize.width / 2), (row * cellSize.height) + (cellSize.height / 2));
+
+						// Switch back.
+						context.font = oldFont;
+
+					} else {
+
+						// Text & FCol.
+						context.fillText(bufData, (column * cellSize.width) + (cellSize.width / 2), (row * cellSize.height) + (cellSize.height / 2));
+
+					}
+
 				}
 
 			}
