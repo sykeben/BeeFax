@@ -29,7 +29,7 @@ class MenuData {
 			updateOnNav: true,
 			data: [
 				new DisplayItem("Sections", 2, 1, 21, 6, 1, 10),
-				new MenuItem("[ About ]", 4, 2, () => { MenuEngine.goMenu("about", 0); }),
+				new MenuItem("[ About ]", 4, 2, () => { MenuEngine.goMenu("about", 1); }),
 				new MenuItem("[ Heads Up ]", 6, 2, () => { MenuEngine.goMenu("headsup", 0); }),
 				new MenuItem("[ News ]", 8, 2, () => { MenuEngine.goMenu("news", 0); }),
 				new MenuItem("[ Quotes ]", 10, 2, () => { MenuEngine.goMenu("quotes", 0); }),
@@ -63,7 +63,7 @@ class MenuData {
 					"interact with BeeFax",
 					"is 4 arrow keys and",
 					"a select button.",
-					"", "","",
+					"",
 					"BeeFax is copyright",
 					"of Benjamin Sykes."
 				], 2, 1),
@@ -80,6 +80,7 @@ class MenuData {
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 				], 12, 21),
+				new MenuItem("[ View Project ]", 20, 1, () => { window.open("https://github.com/sykeben/BeeFax", "_blank"); }),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 0); })
 			]
 		},
