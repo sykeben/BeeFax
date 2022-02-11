@@ -1,5 +1,9 @@
-// Source: https://github.com/defaude/autohide-cursor/blob/master/autohide-cursor.js
-// Modified so it can be used outside of a normal module pov.
+////////////////////////////////////////////////////////////////////////////////
+// BEEFAX // CURSOR AUTOHIDE                                                  //
+////////////////////////////////////////////////////////////////////////////////
+// (C) 2022 - Benjamin Sykes. All rights reserved.                            //
+// Please do not copy or rebrand my work.                                     //
+////////////////////////////////////////////////////////////////////////////////
 
 // Class.
 class AutoHide {
@@ -11,6 +15,8 @@ class AutoHide {
 	}
 
 	// Original function.
+	// Source: https://github.com/defaude/autohide-cursor/blob/master/autohide-cursor.js
+	// Modified so it can be used outside of a normal module pov.
 	static autohideCursor(delay = 1e3) {
 
 		function showCursor() {
