@@ -33,6 +33,16 @@ class Display {
 		// Scale canvases.
 		this.resize();
 
+		// Disable smoothing.
+		// Value names found here: https://www.html5gamedevs.com/topic/1342-nearest-neighbour-resizing-for-pixelart/?do=findComment&comment=8889
+		canvases.forEach((canvas) => {
+			let context = canvas.getContext("2d");
+			context["imageSmoothingEnabled"] = false;
+			context["oImageSmoothingEnabled"] = false;
+			context["webkitImageSmoothingEnabled"] = false;
+			context["msImageSmoothingEnabled"] = false;
+		});
+
 		// Start refresh routine.
 		refreshRoutine = setInterval(this.refresh, 250);
 
