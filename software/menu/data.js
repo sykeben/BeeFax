@@ -11,13 +11,14 @@ class MenuData {
 	// Product version.
 	static version = {
 		major: 1,
-		minor: 5,
-		revision: 5
+		minor: 6,
+		revision: 0
 	};
 
 	// Menu elements.
 	static menus = {
 
+		// Main menu.
 		"main": {
 			title: {
 				text: "Main Menu",
@@ -38,6 +39,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: About.
 		"about": {
 			title: {
 				text: "About BeeFax",
@@ -80,11 +82,12 @@ class MenuData {
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 				], 12, 21),
-				new MenuItem("[ View Project ]", 20, 1, () => { window.open("https://github.com/sykeben/BeeFax", "_blank"); }),
+				new MenuItem("[ View Project ]", 20, 1, () => { MenuEngine.goMenu("di:exitpp", 0); }),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 0); })
 			]
 		},
 
+		// Submenu: Heads Up.
 		"headsup": {
 			title: {
 				text: "Heads Up",
@@ -103,6 +106,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: News.
 		"news": {
 			title: {
 				text: "News",
@@ -120,6 +124,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: Quotes.
 		"quotes": {
 			title: {
 				text: "Quotes",
@@ -137,6 +142,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: Setup.
 		"setup": {
 			title: {
 				text: `Setup (v${MenuData.version.major}.${MenuData.version.minor} r${MenuData.version.revision})`,
@@ -162,6 +168,30 @@ class MenuData {
 					6, 18, 25, -1, -1, 26
 				),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
+			]
+		},
+
+		// Dialog: Exit to Project Page.
+		"di:exitpp": {
+			title: {
+				text: "Confirmation",
+				fCol: 2, bCol: 16
+			},
+			periodicUpdate: function() {},
+			periodicInterval: 99999999,
+			initialWait: 125,
+			updateOnNav: false,
+			data: [
+				new DisplayBlock([
+					"This action will take you away from BeeFax.",
+					"",
+					"Destination:",
+					"https://github.com/sykeben/BeeFax"
+				], 2, 1),
+				new Colortangle(15, 14, 17, 3, 25),
+				new DisplayItem("Are you sure?", 16, 16, -1, -1, 2, 25, true),
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("about", 0); }),
+				new MenuItem("Cont >>", 22, 37, () => { window.location = "https://github.com/sykeben/BeeFax"; })
 			]
 		}
 
