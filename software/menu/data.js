@@ -12,7 +12,7 @@ class MenuData {
 	static version = {
 		major: 1,
 		minor: 6,
-		revision: 2
+		revision: 3
 	};
 
 	// Menu elements.
@@ -157,17 +157,18 @@ class MenuData {
 				new DisplayItem("Skip to the next song.", 2, 18, -1, 0, 28),
 				new DisplayItem("~ Latitude", 4, 1),
 				new InputItem(
-					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat),
-					(val) => { localStorage.setItem("location.lat", val.toString()); ExternalSetup.notifyUpdate(); },
+					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat), defaults.location.lat,
+					(val, isKey = false) => { localStorage.setItem("location.lat", val.toString()); if (isKey) ExternalSetup.notifyUpdate(); },
 					4, 18, 25, -1, -1, 26
 				),
 				new DisplayItem("~ Longitude", 6, 1),
 				new InputItem(
-					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon),
-					(val) => { localStorage.setItem("location.lon", val.toString()); ExternalSetup.notifyUpdate(); },
+					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon), defaults.location.lon,
+					(val, isKey = false) => { localStorage.setItem("location.lon", val.toString()); if (isKey) ExternalSetup.notifyUpdate(); },
 					6, 18, 25, -1, -1, 26
 				),
-				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); }),
+				new MenuItem("[ Reset ]", 22, 35, () => { ExternalSetup.performReset(); })
 			]
 		},
 
