@@ -81,10 +81,12 @@ class MenuItem extends DisplayItem {
 class InputItem extends MenuItem {
 
 	// Constructor.
-	constructor(initialValue = null, callback = null, row, column, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
+	constructor(initialValue = null, resetValue = null, callback = null, row, column, width = -1, offset = -1, fCol = -1, bCol = -1, fBlk = null, bBlk = null) {
 		if (initialValue == null) initialValue = "";
+		if (resetValue == null) resetValue = "";
 		super("", row, column, callback, width, offset, fCol, bCol, fBlk, bBlk);
-		this.value = initialValue;
+		this.value = initialValue.toString();
+		this.resetValue = resetValue.toString();
 	}
 
 	// Type.
@@ -100,7 +102,14 @@ class InputItem extends MenuItem {
 	// Value setter.
 	setValue(newValue) {
 		this.value = newValue;
-		if (this.callback != null) this.callback(this.value);
+		if (this.callback != null) this.callback(this.value, false);
+	}
+
+	// Value resetter.
+	doReset() {
+		this.value = this.resetValue;
+		if (this.callback != null) this.callback(this.value, false);
+		this.write(false);
 	}
 
 	// Select function.
@@ -129,7 +138,7 @@ class InputItem extends MenuItem {
 
 		// Write & Perform callback.
 		this.write(true);
-		if (this.callback != null) this.callback(this.value);
+		if (this.callback != null) this.callback(this.value, true);
 
 	}
 

@@ -46,3 +46,4 @@ Note: Due to their development-only usage, individual revisions are not included
     - 1.3 - Reformatted setup page and reinstated geolocation feature via manual latitude/longitude input.
     - 1.4 - Split code into two branches (one for development, one for production) and started the use of regular version numbering.
     - 1.5 - Added icons to heads-up (+ additional decoder functionality), implemented autofocus, standardized file headers, added project link to about section, improved handling of network issues.
+    - 1.6 - Added confirmation dialog to project link, removed old testing code and resources, improved display scaling for crisper graphics, added reset functionality to setup page, created and implemented custom iconset, started the use of pull requests to publish new versions.

@@ -27,11 +27,22 @@ class ExternalSetup {
 		BufferInterface.writeString(newStatus, 22, consoleSize.columns-newStatus.length-1, 14);
 
 		// Set clear timeout.
-		lmTimeout = setTimeout(() => {
-			if (menuName != "setup") return;
-			BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 14);
-		}, 3000);
+		lmTimeout = setTimeout(() => { this.clearStatus(); }, 3000);
 
+	}
+
+	// Status clearer.
+	static clearStatus() {
+
+		// Quit if incorrect menu.
+		if (menuName != "setup") return;
+
+		// Clear previous.
+		BufferInterface.fillText(22, 9, consoleSize.columns, 1, " ", 14);
+
+		// Reprint last menu item.
+		menuItems[menuItems.length-1].write();
+		
 	}
 
 	// Track skip.
@@ -50,6 +61,19 @@ class ExternalSetup {
 
 		// Notify user.
 		ExternalSetup.printStatus("Setting updated.");
+
+	}
+
+	// Setting resetter.
+	static performReset() {
+
+		// Reset all valid objects.
+		menuItems.forEach((item) => {
+			let type = item.getType();
+			if (type == "item.input") {
+				item.doReset();
+			}
+		});
 
 	}
 

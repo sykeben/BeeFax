@@ -59,7 +59,12 @@
 @font-face {
 	font-family: customIconWeather;
 	font-size: normal;
-	font-weight: 600;
-	font-display: swap;
 	src: url(../iconset/weather.woff2);
+}
+
+/* icon: custom */
+@font-face {
+	font-family: customIconCustom;
+	font-size: normal;
+	src: url(../iconset/custom.ttf);
 }

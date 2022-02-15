@@ -110,7 +110,7 @@ class ExternalHeadsUp {
 	static DEGtoCARD(DEG) {
 		if (typeof DEG === 'string') DEG = parseInt(DEG);
 		if (DEG <= 0 || DEG > 360 || typeof DEG === 'undefined') return '☈';
-		const arrows = { north: '\uf058 N', north_east: '\uf057 NE', east: '\uf04d E', south_east: '\uf088 SE', south: '\uf044 S', south_west: '\uf043 SW', west: '\uf048 W', north_west: '\uf087 NW' };
+		const arrows = { north: 'C N', north_east: 'F NE', east: 'B E', south_east: 'G SE', south: 'D S', south_west: 'H SW', west: 'A W', north_west: 'E NW' };
 		const directions = Object.keys(arrows);
 		const degree = 360 / directions.length;
 		DEG = DEG + degree / 2;
@@ -153,54 +153,21 @@ class ExternalHeadsUp {
 		let result = [];
 		conditions.forEach((cCondition) => {
 
-			// Partials.
-			let part = "?";
-			if (cCondition.includes("part")) {
-				part = "P";
-			} else if (cCondition.includes("most")) {
-				part = "M"
-			}
-
 			// Conditions.
-			let cond = "?"
+			let icon = "Custom:";
 			if (cCondition.includes("sun")) {
-				cond = "Sun";
+				icon += "J";
 			} else if (cCondition.includes("clear")) {
-				cond = "Clear";
+				icon += "K";
 			} else if (cCondition.includes("cloud")) {
-				cond = "Cloud";
+				icon += "L";
 			} else if (cCondition.includes("rain")) {
-				cond = "Rain";
+				icon += "M";
 			} else if (cCondition.includes("snow")) {
-				cond = "Snow";
+			    icon += "N";
+			} else {
+				icon += "O";
 			}
-
-			// Translate.
-			// Icon values: https://erikflowers.github.io/weather-icons/
-			const translations = {
-				"?": {
-					"Sun": "\uf00d",
-					"Clear": "\uf02e",
-					"Cloud": "\uf013",
-					"Rain": "\uf018",
-					"Snow": "\uf064"
-				},
-				"P": {
-					"Sun": "\uf002",
-					"Clear": "\uf023",
-					"Cloud": "\uf041",
-					"Rain": "\uf019",
-					"Snow": "\uf01b"
-				},
-				"M": {
-					"Sun": "\uf0b6",
-					"Clear": "\uf086",
-					"Cloud": "\uf014",
-					"Rain": "\uf019",
-					"Snow": "\uf01b"
-				}
-			}
-			let icon = `Weather:${translations[part][cond] == null ? "\uf07b" : translations[part][cond]}:S:-5:2`;
 
 			// Update result.
 			result.push(icon);
@@ -236,11 +203,11 @@ class ExternalHeadsUp {
 
 		// Temperature.
 		BufferInterface.writeString(temp, 17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2)));
-		BufferInterface.placeIcon(17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2))+temp.length-2, "Weather:\uf042:XL:5")
+		BufferInterface.placeIcon(17, (consoleSize.columns-28)+Math.floor(((27-temp.length)/2))+temp.length-2, "Custom:I")
 
 		// Wind.
 		BufferInterface.writeString(wind, 18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2)));
-		BufferInterface.placeIcon(18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2))+wind.length-windCard.length, `Weather:${windCard[0]}:XL:2`);
+		BufferInterface.placeIcon(18, (consoleSize.columns-28)+Math.floor(((27-wind.length)/2))+wind.length-windCard.length, `Custom:${windCard[0]}`);
 
 		// Humidity.
 		BufferInterface.writeString(humid, 19, (consoleSize.columns-28)+Math.floor(((27-humid.length)/2)));

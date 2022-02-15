@@ -22,13 +22,22 @@ class ExternalNews {
 		BufferInterface.fillText(3, 1, consoleSize.columns-2, 18, " ");
 
 		// Write scroll indicators.
-		if (newsScroll > 0) BufferInterface.writeString("↑", 3, consoleSize.columns-2, 26);
-		if (newsScroll+16 < featuredNews.length) BufferInterface.writeString("↓", 20, consoleSize.columns-2, 26);
+		if (newsScroll > 0) {
+			BufferInterface.placeIcon(3, consoleSize.columns-2, "Custom:C:S")
+			BufferInterface.placeFCol(3, consoleSize.columns, 26);
+		}
+		if (newsScroll+16 < featuredNews.length) {
+			BufferInterface.placeIcon(20, consoleSize.columns-2, "Custom:D:S")
+			BufferInterface.placeFCol(20, consoleSize.columns, 26);
+		}
 
 		// Write scrolled text.
 		for (let index = newsScroll; index < featuredNews.length && index-newsScroll < 16; index++) {
 			BufferInterface.writeString(featuredNews[index], 4+(index-newsScroll), 3);
 		}
+
+		// Prompt redraw.
+		Display.goDraw();
 
 	}
 
@@ -57,6 +66,9 @@ class ExternalNews {
 					featured.push(current);
 				})
 			});
+			for (let i=0; i<10; i++) {
+				featured.push(`+++ ${i}`);
+			}
 			featuredNews = featured;
 
 			// Write topics

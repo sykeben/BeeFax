@@ -11,13 +11,14 @@ class MenuData {
 	// Product version.
 	static version = {
 		major: 1,
-		minor: 5,
+		minor: 6,
 		revision: 5
 	};
 
 	// Menu elements.
 	static menus = {
 
+		// Main menu.
 		"main": {
 			title: {
 				text: "Main Menu",
@@ -38,6 +39,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: About.
 		"about": {
 			title: {
 				text: "About BeeFax",
@@ -80,11 +82,12 @@ class MenuData {
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
 					[-1, -1, -1, -1, -1, -1, -1, -1,  0,  0,  0,  0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 				], 12, 21),
-				new MenuItem("[ View Project ]", 20, 1, () => { window.open("https://github.com/sykeben/BeeFax", "_blank"); }),
+				new MenuItem("[ View Project ]", 20, 1, () => { MenuEngine.goMenu("di:exitpp", 0); }),
 				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 0); })
 			]
 		},
 
+		// Submenu: Heads Up.
 		"headsup": {
 			title: {
 				text: "Heads Up",
@@ -103,6 +106,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: News.
 		"news": {
 			title: {
 				text: "News",
@@ -120,6 +124,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: Quotes.
 		"quotes": {
 			title: {
 				text: "Quotes",
@@ -137,6 +142,7 @@ class MenuData {
 			]
 		},
 
+		// Submenu: Setup.
 		"setup": {
 			title: {
 				text: `Setup (v${MenuData.version.major}.${MenuData.version.minor} r${MenuData.version.revision})`,
@@ -151,17 +157,42 @@ class MenuData {
 				new DisplayItem("Skip to the next song.", 2, 18, -1, 0, 28),
 				new DisplayItem("~ Latitude", 4, 1),
 				new InputItem(
-					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat),
-					(val) => { localStorage.setItem("location.lat", val.toString()); ExternalSetup.notifyUpdate(); },
+					defaultSetting(localStorage.getItem("location.lat"), defaults.location.lat), defaults.location.lat,
+					(val, isKey = false) => { localStorage.setItem("location.lat", val.toString()); if (isKey) ExternalSetup.notifyUpdate(); },
 					4, 18, 25, -1, -1, 26
 				),
 				new DisplayItem("~ Longitude", 6, 1),
 				new InputItem(
-					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon),
-					(val) => { localStorage.setItem("location.lon", val.toString()); ExternalSetup.notifyUpdate(); },
+					defaultSetting(localStorage.getItem("location.lon"), defaults.location.lon), defaults.location.lon,
+					(val, isKey = false) => { localStorage.setItem("location.lon", val.toString()); if (isKey) ExternalSetup.notifyUpdate(); },
 					6, 18, 25, -1, -1, 26
 				),
-				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); })
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("main", 4); }),
+				new MenuItem("[ Reset ]", 22, 35, () => { ExternalSetup.performReset(); })
+			]
+		},
+
+		// Dialog: Exit to Project Page.
+		"di:exitpp": {
+			title: {
+				text: "Confirmation",
+				fCol: 2, bCol: 16
+			},
+			periodicUpdate: function() {},
+			periodicInterval: 99999999,
+			initialWait: 125,
+			updateOnNav: false,
+			data: [
+				new DisplayBlock([
+					"This action will take you away from BeeFax.",
+					"",
+					"Destination:",
+					"https://github.com/sykeben/BeeFax"
+				], 2, 1),
+				new Colortangle(15, 14, 17, 3, 25),
+				new DisplayItem("Are you sure?", 16, 16, -1, -1, 2, 25, true),
+				new MenuItem("<< Back", 22, 1, () => { MenuEngine.goMenu("about", 0); }),
+				new MenuItem("Cont >>", 22, 37, () => { window.location = "https://github.com/sykeben/BeeFax"; })
 			]
 		}
 

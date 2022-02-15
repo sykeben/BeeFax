@@ -46,7 +46,6 @@ class Decoder {
 		// Update according to decoder mode.
 		if (displayMode == "blank") this.drawBlank(displaySize, canvas, context, bufferNumber);
 		else if (displayMode == "normal") this.drawNormal(displaySize, canvas, context, bufferNumber);
-		else if (displayMode == "test") this.drawTest(displaySize, canvas, context, bufferNumber);
 		else this.drawError(displaySize, canvas, context, bufferNumber);
 
 		// Return.
@@ -138,34 +137,6 @@ class Decoder {
 				selection.width * cellSize.width,
 				selection.height * cellSize.height,
 			);
-		}
-
-	}
-
-	// Decoder child drawing routine: Test.
-	static drawTest(displaySize, canvas, context, bufferNumber) {
-
-		// Draw: Underlay.
-		this.drawNormal(displaySize, canvas, context, bufferNumber);
-
-		// Setup: Lines.
-		context.strokeStyle = "#ff0000";
-		context.lineWidth = 1;
-
-		// Draw: Horizontal lines.
-		for (let y = 0; y < displaySize.height; y += (displaySize.height / consoleSize.rows)) {
-			context.beginPath();
-			context.moveTo(0, y);
-			context.lineTo(displaySize.width, y);
-			context.stroke();
-		}
-
-		// Draw: Vertical lines.
-		for (let x = 0; x < displaySize.width; x += (displaySize.width / consoleSize.columns)) {
-			context.beginPath();
-			context.moveTo(x, 0);
-			context.lineTo(x, displaySize.height);
-			context.stroke();
 		}
 
 	}
