@@ -66,9 +66,6 @@ class ExternalNews {
 					featured.push(current);
 				})
 			});
-			for (let i=0; i<10; i++) {
-				featured.push(`+++ ${i}`);
-			}
 			featuredNews = featured;
 
 			// Write topics
