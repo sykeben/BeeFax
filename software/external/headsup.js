@@ -165,6 +165,12 @@ class ExternalHeadsUp {
 				icon += "M";
 			} else if (cCondition.includes("snow")) {
 			    icon += "N";
+			} else if (cCondition.includes("sleet")) {
+				icon += "P";
+			} else if (cCondition.includes("thunder")) {
+				icon += "Q";
+			} else if (cCondition.includes("shower")) {
+				icon += "R";
 			} else {
 				icon += "O";
 			}

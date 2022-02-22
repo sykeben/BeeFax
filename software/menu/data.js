@@ -11,8 +11,8 @@ class MenuData {
 	// Product version.
 	static version = {
 		major: 1,
-		minor: 6,
-		revision: 6
+		minor: 7,
+		revision: 0
 	};
 
 	// Menu elements.

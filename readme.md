@@ -48,3 +48,4 @@ Note: Due to their development-only usage, individual revisions are not included
     - 1.5 - Added icons to heads-up (+ additional decoder functionality), implemented autofocus, standardized file headers, added project link to about section, improved handling of network issues.
     - 1.6 - Added confirmation dialog to project link, removed old testing code and resources, improved display scaling for crisper graphics, added reset functionality to setup page, created and implemented custom iconset, started the use of pull requests to publish new versions.
         - 1.6R6 - Removed testing code that was accidently left in.
+    - 1.7 - Added additional custom icons.
